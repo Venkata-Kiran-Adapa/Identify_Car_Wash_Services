@@ -57,7 +57,9 @@ public class JustDialHomePageForGym {
     		locationInput.sendKeys(location);
     		wait.until(ExpectedConditions.elementToBeClickable(firstLocationDropdown)).click(); 
     }
-
+    
+    
+    //To Scroll down for few elements and go for the next
     public void scrollAndExtractGymNames() throws InterruptedException {
     	Actions a=new Actions(driver);
     	WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(10));

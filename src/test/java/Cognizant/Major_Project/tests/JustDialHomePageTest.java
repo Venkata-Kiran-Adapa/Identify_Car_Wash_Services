@@ -1,39 +1,54 @@
 package Cognizant.Major_Project.tests;
 
-
-
-
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.testng.ITestContext;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import Cognizant.Major_Project.Reports.ListenerClass;
 import Cognizant.Major_Project.Utils.ExcelUtil;
 import Cognizant.Major_Project.pages.CarWashServicesPage;
 import Cognizant.Major_Project.pages.FreeListing;
 import Cognizant.Major_Project.pages.JustDialHomePage;
 import Cognizant.Major_Project.pages.JustDialHomePageForGym;
 
-public class JustDialHomePageTest {
+@Listeners(ListenerClass.class)
+public class JustDialHomePageTest  {
 	WebDriver driver;
+	
 	JustDialHomePage page;
 	CarWashServicesPage search;
 	FreeListing listingPage;
 	JustDialHomePageForGym homePage;
 	
-	String url="https://www.justdial.com/";
+	Properties properties = new Properties();
+//	String url="https://www.justdial.com/";
+	String url;
+	{
+	    try {
+	        FileInputStream file = new FileInputStream("src/test/resources/resource/config.properties");
+	        properties.load(file);
+	        url = properties.getProperty("url");
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        url = "https://www.justdial.com/";
+	    }
+	}
 	
 	@BeforeMethod
-	public WebDriver setUpDriver() {
+	public WebDriver setUpDriver(ITestContext context) {
 		EdgeOptions options=new EdgeOptions();
 		options.addArguments("--disable-notifications");
 		driver=new EdgeDriver(options);
+		context.setAttribute("driver", driver);
 		driver.manage().window().maximize();
 		driver.get(url);
 		return driver;

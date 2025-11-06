@@ -33,7 +33,6 @@ public class JustDialHomePage {
 	WebElement autoDetectElement;
 	
 	public JustDialHomePage(WebDriver driver) {
-		super();
 		this.driver = driver;
 	    PageFactory.initElements(driver, this); 
 	}

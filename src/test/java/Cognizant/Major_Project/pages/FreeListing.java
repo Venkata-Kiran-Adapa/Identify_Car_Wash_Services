@@ -54,7 +54,7 @@ public class FreeListing {
     public JustDialHomePageForGym captureErrorScreenshot(String number) {
         try {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", errorMessage);
-            Path screenshotDir = Paths.get("src/test/java/Cognizant/Major_Project/Screenshots/error"+number+".png");
+            Path screenshotDir = Paths.get("src/test/java/Cognizant/Major_Project/Output-ss/Screenshots/error"+number+".png");
             
             File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             

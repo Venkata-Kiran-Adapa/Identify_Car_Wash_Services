@@ -39,9 +39,6 @@ public class CarWashServicesPage {
 	@FindBy(xpath = "//label[@for='4.0+']")
 	WebElement setRatingElement;
 	
-//	@FindBy(xpath="//main[@id='mainContent']/child::div/child::div[@role='none']/descendant::h2")
-//	List<WebElement> divElement;
-	
 	@FindBy(xpath="//div[@role='button']/child::span[text()='Show Number']")
 	List<WebElement> showNumberBtn;
 	

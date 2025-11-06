@@ -16,7 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelUtil {
 	
 	public static  Object[][] readXlData() throws IOException {
-		File file = new File("src/test/java/Cognizant/Major_Project/Excel_Files/cityNames.xlsx");
+		File file = new File("src\\test\\resources\\resource\\cityNames.xlsx");
 		if (!file.exists() || file.length() == 0) {
 		    throw new RuntimeException("Excel file is missing or empty.");
 		}
