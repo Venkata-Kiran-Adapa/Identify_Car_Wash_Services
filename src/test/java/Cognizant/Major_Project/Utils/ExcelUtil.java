@@ -35,7 +35,7 @@ public class ExcelUtil {
 	}
 
 	public static void writeData(List<String> list1, List<String> list2, String sheetName) throws IOException {
-	    String filePath = "C:\\Users\\2440638\\OneDrive - Cognizant\\Desktop\\OutputXlFile.xlsx";
+	    String filePath = "Output-ss/ExcelFIles/OutputXLFile.xlsx";
 
 	    try (FileInputStream fis = new FileInputStream(filePath);
 	         XSSFWorkbook workbook = new XSSFWorkbook(fis)) {

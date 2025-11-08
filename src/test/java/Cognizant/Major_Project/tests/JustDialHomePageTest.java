@@ -22,12 +22,13 @@ import Cognizant.Major_Project.pages.JustDialHomePageForGym;
 
 @Listeners(ListenerClass.class)
 public class JustDialHomePageTest  {
-	WebDriver driver;
+	public static WebDriver driver;
 	
 	JustDialHomePage page;
 	CarWashServicesPage search;
 	FreeListing listingPage;
 	JustDialHomePageForGym homePage;
+	int count=0;
 	
 	Properties properties = new Properties();
 //	String url="https://www.justdial.com/";
@@ -96,7 +97,7 @@ public class JustDialHomePageTest  {
             listingPage.fillFormWithInvalidPhone(mobileNum);
             String error = listingPage.getErrorMessage();
             System.out.println("Captured Error Message: " + error);
-            homePage=listingPage.captureErrorScreenshot(mobileNum);
+            homePage=listingPage.captureErrorScreenshot(mobileNum,++count);
     	} catch (Exception e) {
             System.out.println("Error capturing screenshot: " + e.getMessage());
             e.printStackTrace();
@@ -105,8 +106,9 @@ public class JustDialHomePageTest  {
 	    public void testGymSearchAndScroll() throws InterruptedException, IOException {
 	    	if(driver!=null) driver.manage().deleteAllCookies();
 	        homePage.clickGymLink();
-//	        homePage.selectLocation("gachibowli, Hyderabad");
-	        homePage.scrollAndExtractGymNames();
+	        homePage.selectLocation("gachibowli, Hyderabad");
+	        homePage.scrolling();
+//	        homePage.scrollAndExtractGymNames();
 	        homePage.gymNames();
 	    }
 	

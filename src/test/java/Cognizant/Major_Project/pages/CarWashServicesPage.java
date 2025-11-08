@@ -105,12 +105,11 @@ public class CarWashServicesPage {
 	}
 
 	public FreeListing printDetails() throws IOException {
-		System.out.println("CarWashing Services ");
-//		for(int i=0;i<5;i++) {
-//			System.out.println(names.get(i)+" - "+mobileNum.get(i));
-//		}
+//		System.out.println("CarWashing Services ");
+		for(int i=0;i<5;i++) {
+			System.out.println(names.get(i)+" - "+mobileNum.get(i));
+		}
 		ExcelUtil.writeData(names, mobileNum, "carWashServices");
-		System.out.println("CarWashing Services End");
 		return new FreeListing(driver);
 	}
 }
