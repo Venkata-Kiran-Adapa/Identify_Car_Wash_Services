@@ -68,7 +68,6 @@ public class JustDialHomePageTest  {
 		test2(mobileNum);
 		driver.manage().deleteAllCookies();
 		driver.navigate().to(url);
-		
 		testGymSearchAndScroll();
 		System.out.println("driver quit");
 		driver.quit();
@@ -91,7 +90,6 @@ public class JustDialHomePageTest  {
 	}
 	
 	public void test2(String mobileNum){
-		
 		try{
     		if(driver!=null) driver.manage().deleteAllCookies();
             listingPage.fillFormWithInvalidPhone(mobileNum);

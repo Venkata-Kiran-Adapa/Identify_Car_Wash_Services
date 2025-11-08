@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -62,23 +65,59 @@ public class CarWashServicesPage {
 	List<String> mobileNum=new ArrayList<String>(5);
 	
 	public void closeInnerPopUp() {
+		try {
+			
 		wait.until(ExpectedConditions.visibilityOf(innerPopUpClose));
 		innerPopUpClose.click();
+		}catch(NoSuchElementException e) {
+			System.out.println("Element Not Found "+ e.getLocalizedMessage());
+		}catch(ElementClickInterceptedException e) {
+			System.out.println(e.getLocalizedMessage());
+		}catch(Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
 	}
 
 	public void setRating() throws InterruptedException {
+		try {
+			
 		wait.until(ExpectedConditions.visibilityOf(ratingsElement));
 		ratingsElement.click();
 		js.executeScript("arguments[0].click();",setRatingElement);
+		}catch(NoSuchElementException e) {
+			System.out.println("Element Not Found "+ e.getLocalizedMessage());
+		}catch(ElementClickInterceptedException e) {
+			System.out.println(e.getLocalizedMessage());
+		}catch(Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
 	}
 	public void setTopRated() throws InterruptedException {
+		try {
+			
 		wait.until(ExpectedConditions.visibilityOfAllElements(getNumberElement));
 		getMobileNumber();
 		wait.until(ExpectedConditions.elementToBeClickable(topRatedElement)).click();
+		}catch(NoSuchElementException e) {
+			System.out.println("Element Not Found "+ e.getLocalizedMessage());
+		}catch(ElementClickInterceptedException e) {
+			System.out.println(e.getLocalizedMessage());
+		}catch(Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
 	}
 	
 	public void getServiceDetails() throws InterruptedException{
+		try {	
 		wait.until(ExpectedConditions.visibilityOfAllElements(serviceNames));
+		}
+		catch(NoSuchElementException e) {
+			System.out.println("Element Not Found "+ e.getLocalizedMessage());
+		}catch(ElementClickInterceptedException e) {
+			System.out.println(e.getLocalizedMessage());
+		}catch(Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
 		for(int i=0;i<5;i++) {
 			WebElement element=serviceNames.get(i);
 			names.add(element.getText());
@@ -105,11 +144,15 @@ public class CarWashServicesPage {
 	}
 
 	public FreeListing printDetails() throws IOException {
-//		System.out.println("CarWashing Services ");
 		for(int i=0;i<5;i++) {
 			System.out.println(names.get(i)+" - "+mobileNum.get(i));
 		}
-		ExcelUtil.writeData(names, mobileNum, "carWashServices");
+		try {			
+			ExcelUtil.writeData(names, mobileNum, "carWashServices");
+		}
+		catch(Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
 		return new FreeListing(driver);
 	}
 }
