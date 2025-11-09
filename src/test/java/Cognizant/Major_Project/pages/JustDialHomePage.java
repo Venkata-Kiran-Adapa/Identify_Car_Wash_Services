@@ -38,8 +38,12 @@ public class JustDialHomePage {
 	}
 
 	public void closeLogin() {
+		try {	
 		wait.until(ExpectedConditions.visibilityOf(closeLoginElement));
 		closeLoginElement.click();
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
 	}
 	
 	public void closeOuterPopUp() {
@@ -50,7 +54,11 @@ public class JustDialHomePage {
 		locationElement.click();
 		locationElement.sendKeys(location);
 		Thread.sleep(1000);
+		try {
 		wait.until(ExpectedConditions.visibilityOf(autoSuggestionElement));
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
 		autoSuggestionElement.click();
 	}
 	

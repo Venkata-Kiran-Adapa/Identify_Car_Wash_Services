@@ -38,7 +38,6 @@ public class ExcelUtil {
 	    String filePath = "Output-ss/ExcelFIles/OutputXLFile.xlsx";
 	    File file = new File(filePath);
 	    XSSFWorkbook workbook;
-
 	    if (!file.exists()) {
 	        file.getParentFile().mkdirs(); 
 	        workbook = new XSSFWorkbook();
@@ -47,21 +46,18 @@ public class ExcelUtil {
 	            workbook = new XSSFWorkbook(fis);
 	        }
 	    }
-
 	    int sheetIndex = workbook.getSheetIndex(sheetName);
 	    if (sheetIndex != -1) {
 	        workbook.removeSheetAt(sheetIndex);
 	    }
 	    XSSFSheet sheet = workbook.createSheet(sheetName);
 	    XSSFRow headerRow = sheet.createRow(0);
-
 	    if (list2 == null) {
 	        headerRow.createCell(0).setCellValue("Gym Names");
 	    } else {
 	        headerRow.createCell(0).setCellValue("CarWashServiceName");
 	        headerRow.createCell(1).setCellValue("Contact Number");
 	    }
-
 	    for (int i = 0; i < list1.size(); i++) {
 	        XSSFRow row = sheet.createRow(i + 1);
 	        row.createCell(0).setCellValue(list1.get(i));
@@ -72,7 +68,7 @@ public class ExcelUtil {
 	    try (FileOutputStream fos = new FileOutputStream(filePath)) {
 	        workbook.write(fos);
 	    }
-
 	    System.out.println("Sheet '" + sheetName + "' written successfully.");
+	    workbook.close();
 	}
 }

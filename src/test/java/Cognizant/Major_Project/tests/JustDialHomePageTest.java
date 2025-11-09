@@ -62,54 +62,54 @@ public class JustDialHomePageTest  {
 		return ExcelUtil.readXlData();
 	}
 	
-	@Test(dataProvider = "Details")
+	@Test(dataProvider = "Details", retryAnalyzer = Cognizant.Major_Project.Reports.RetryClass.class)
 	public void testJustDialPage(String location,String mobileNum) throws InterruptedException, IOException{
-		ReportsClass.test.log(Status.INFO, "Starting the Test 1");
+		logInfo("Starting the Test 1");
 		test1(location);
-		ReportsClass.test.log(Status.INFO, " Test 1 passed");
-		driver.manage().deleteAllCookies();
+		logInfo("Test 1 passed");
+		deleteCookies();
 		driver.navigate().to(url);
 		Thread.sleep(1000);
-		driver.manage().deleteAllCookies();
-		ReportsClass.test.log(Status.INFO, "Starting the Test 2");
+		deleteCookies();
+		logInfo("Starting the Test 2");
 		test2(mobileNum);
-		ReportsClass.test.log(Status.INFO, " Test 2 passed");
-		driver.manage().deleteAllCookies();
+		logInfo("Test 2 passed");
+		deleteCookies();
 		driver.navigate().to(url);
-		ReportsClass.test.log(Status.INFO, "Starting the Test 3");
+		logInfo("Starting the Test 3");
 		testGymSearchAndScroll();
-		ReportsClass.test.log(Status.INFO, " Test 2 passed");
-		driver.quit();
+		logInfo("Test 2 passed");
+		tearDown();
 	}
 	
 	public void test1(String location) throws InterruptedException, IOException {
 	    page=new JustDialHomePage(driver);
-		if(driver!=null) driver.manage().deleteAllCookies();
+		deleteCookies();
 		page.closeLogin();
 		page.closeOuterPopUp();
-		ReportsClass.test.log(Status.INFO, " Setting Location and search bar with Car Wash Services");
+		logInfo("Setting Location and search bar with Car Wash Services");
 		page.setLocation(location);
 		search = page.search();
-		if(driver!=null) driver.manage().deleteAllCookies();
+		deleteCookies();
 		search.setRating();
 		Thread.sleep(1000);
 		search.setTopRated();
 		search.getServiceDetails();
 		Thread.sleep(2000);
-		ReportsClass.test.log(Status.INFO, "Printing the Services Names and Phone Numbers");
+		logInfo("Printing the Services Names and Phone Numbers");
 		listingPage= search.printDetails();
 		System.out.println("Test 1 Passed");
 	}
 	
 	public void test2(String mobileNum){
 		try{
-    		if(driver!=null) driver.manage().deleteAllCookies();
+    		deleteCookies();
             listingPage.fillFormWithInvalidPhone(mobileNum);
             String error = listingPage.getErrorMessage();
-            ReportsClass.test.log(Status.INFO, "Logging Error Info");
+            logInfo("Logging Error Info");
             System.out.println("Captured Error Message: " + error);
             homePage=listingPage.captureErrorScreenshot(mobileNum,++count);
-            ReportsClass.test.log(Status.INFO, "ScreenShot captured for second test");
+            logInfo("ScreenShot captured for second test");
             System.out.println("Test 2 Passed");
     	} catch (Exception e) {
             System.out.println("Error capturing screenshot: " + e.getMessage());
@@ -117,17 +117,27 @@ public class JustDialHomePageTest  {
         }
 	}
 	    public void testGymSearchAndScroll() throws InterruptedException, IOException {
-	    	if(driver!=null) driver.manage().deleteAllCookies();
-	    	ReportsClass.test.log(Status.INFO, "Redirecting to Gyms Page");
+	    	deleteCookies();
+	    	logInfo("Redirecting to Gyms Page");
 	        homePage.clickGymLink();
 	        homePage.selectLocation("gachibowli, Hyderabad");
 	        homePage.scrolling();
-//	        homePage.scrollAndExtractGymNames();
 	        homePage.gymNames();
-	        ReportsClass.test.log(Status.INFO, "Printing the Gyms Names and Storing it in Excel File");
+	        logInfo("Printing the Gyms Names and Storing it in Excel File");
 	        System.out.println("Test 3 Passed");
 	    }
-	
+	 
+	    public void logInfo(String info) {
+	    	ReportsClass.test.log(Status.INFO, info);
+	    }
+	    
+	    public void deleteCookies() {
+	    	if(driver!=null) driver.manage().deleteAllCookies();
+	    }
+	    
+	    public void tearDown() {
+	    	driver.quit();
+	    }
 
 
 }

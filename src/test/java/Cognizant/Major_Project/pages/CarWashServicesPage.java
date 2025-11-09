@@ -69,6 +69,7 @@ public class CarWashServicesPage {
 			
 		wait.until(ExpectedConditions.visibilityOf(innerPopUpClose));
 		innerPopUpClose.click();
+		
 		}catch(NoSuchElementException e) {
 			System.out.println("Element Not Found "+ e.getLocalizedMessage());
 		}catch(ElementClickInterceptedException e) {
