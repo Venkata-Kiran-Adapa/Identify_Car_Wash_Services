@@ -98,6 +98,7 @@ public class CarWashServicesPage {
 		wait.until(ExpectedConditions.visibilityOfAllElements(getNumberElement));
 		getMobileNumber();
 		wait.until(ExpectedConditions.elementToBeClickable(topRatedElement)).click();
+		
 		}catch(NoSuchElementException e) {
 			System.out.println("Element Not Found "+ e.getLocalizedMessage());
 		}catch(ElementClickInterceptedException e) {

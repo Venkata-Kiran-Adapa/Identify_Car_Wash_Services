@@ -36,45 +36,43 @@ public class ExcelUtil {
 
 	public static void writeData(List<String> list1, List<String> list2, String sheetName) throws IOException {
 	    String filePath = "Output-ss/ExcelFIles/OutputXLFile.xlsx";
+	    File file = new File(filePath);
+	    XSSFWorkbook workbook;
 
-	    try (FileInputStream fis = new FileInputStream(filePath);
-	         XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
-
-	        // Check if sheet already exists
-	        if (workbook.getSheet(sheetName) != null) {
-	            System.out.println("Sheet '" + sheetName + "' already exists. Choose a different name.");
-	            return;
+	    if (!file.exists()) {
+	        file.getParentFile().mkdirs(); 
+	        workbook = new XSSFWorkbook();
+	    } else {
+	        try (FileInputStream fis = new FileInputStream(file)) {
+	            workbook = new XSSFWorkbook(fis);
 	        }
-
-	        XSSFSheet sheet = workbook.createSheet(sheetName);
-	        XSSFRow headerRow = sheet.createRow(0);
-
-	        if (list2 == null) {
-	            headerRow.createCell(0).setCellValue("Gym Names");
-	        } else {
-	            headerRow.createCell(0).setCellValue("CarWashServiceName");
-	            headerRow.createCell(1).setCellValue("Contact Number");
-	        }
-
-	        for (int i = 0; i < list1.size(); i++) {
-	            XSSFRow row = sheet.createRow(i + 1);
-	            row.createCell(0).setCellValue(list1.get(i));
-	            if (list2 != null && i < list2.size()) {
-	                row.createCell(1).setCellValue(list2.get(i));
-	            }
-	        }
-
-	        // Write back to the same file
-	        try (FileOutputStream fos = new FileOutputStream(filePath)) {
-	            workbook.write(fos);
-	        }
-
-	        System.out.println("Sheet '" + sheetName + "' added successfully.");
-
-	    } catch (Exception e) {
-	        System.out.println("Error: " + e.getLocalizedMessage());
 	    }
-	}
 
-	
+	    int sheetIndex = workbook.getSheetIndex(sheetName);
+	    if (sheetIndex != -1) {
+	        workbook.removeSheetAt(sheetIndex);
+	    }
+	    XSSFSheet sheet = workbook.createSheet(sheetName);
+	    XSSFRow headerRow = sheet.createRow(0);
+
+	    if (list2 == null) {
+	        headerRow.createCell(0).setCellValue("Gym Names");
+	    } else {
+	        headerRow.createCell(0).setCellValue("CarWashServiceName");
+	        headerRow.createCell(1).setCellValue("Contact Number");
+	    }
+
+	    for (int i = 0; i < list1.size(); i++) {
+	        XSSFRow row = sheet.createRow(i + 1);
+	        row.createCell(0).setCellValue(list1.get(i));
+	        if (list2 != null && i < list2.size()) {
+	            row.createCell(1).setCellValue(list2.get(i));
+	        }
+	    }
+	    try (FileOutputStream fos = new FileOutputStream(filePath)) {
+	        workbook.write(fos);
+	    }
+
+	    System.out.println("Sheet '" + sheetName + "' written successfully.");
+	}
 }

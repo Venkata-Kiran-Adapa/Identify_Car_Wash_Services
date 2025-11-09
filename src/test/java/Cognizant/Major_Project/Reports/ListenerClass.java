@@ -32,7 +32,7 @@ public class ListenerClass implements ITestListener {
 	@Override
 	public void onTestFailure(ITestResult result) {
 		ReportsClass.test.log(Status.FAIL, "This test failed");
-		driver = (WebDriver) result.getTestContext().getAttribute("drivername");
+		driver = (WebDriver) result.getTestContext().getAttribute("driver");
 		String str = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BASE64);
 		ReportsClass.test.addScreenCaptureFromBase64String(str);
 	}

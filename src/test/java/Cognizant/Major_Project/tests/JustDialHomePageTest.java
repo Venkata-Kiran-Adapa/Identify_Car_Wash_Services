@@ -13,7 +13,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.Status;
+
 import Cognizant.Major_Project.Reports.ListenerClass;
+import Cognizant.Major_Project.Reports.ReportsClass;
 import Cognizant.Major_Project.Utils.ExcelUtil;
 import Cognizant.Major_Project.pages.CarWashServicesPage;
 import Cognizant.Major_Project.pages.FreeListing;
@@ -31,7 +34,6 @@ public class JustDialHomePageTest  {
 	int count=0;
 	
 	Properties properties = new Properties();
-//	String url="https://www.justdial.com/";
 	String url;
 	{
 	    try {
@@ -61,15 +63,22 @@ public class JustDialHomePageTest  {
 	}
 	
 	@Test(dataProvider = "Details")
-	public void main(String location,String mobileNum) throws InterruptedException, IOException{
+	public void testJustDialPage(String location,String mobileNum) throws InterruptedException, IOException{
+		ReportsClass.test.log(Status.INFO, "Starting the Test 1");
 		test1(location);
-		driver.navigate().to(url);
+		ReportsClass.test.log(Status.INFO, " Test 1 passed");
 		driver.manage().deleteAllCookies();
+		driver.navigate().to(url);
+		Thread.sleep(1000);
+		driver.manage().deleteAllCookies();
+		ReportsClass.test.log(Status.INFO, "Starting the Test 2");
 		test2(mobileNum);
+		ReportsClass.test.log(Status.INFO, " Test 2 passed");
 		driver.manage().deleteAllCookies();
 		driver.navigate().to(url);
+		ReportsClass.test.log(Status.INFO, "Starting the Test 3");
 		testGymSearchAndScroll();
-		System.out.println("driver quit");
+		ReportsClass.test.log(Status.INFO, " Test 2 passed");
 		driver.quit();
 	}
 	
@@ -78,6 +87,7 @@ public class JustDialHomePageTest  {
 		if(driver!=null) driver.manage().deleteAllCookies();
 		page.closeLogin();
 		page.closeOuterPopUp();
+		ReportsClass.test.log(Status.INFO, " Setting Location and search bar with Car Wash Services");
 		page.setLocation(location);
 		search = page.search();
 		if(driver!=null) driver.manage().deleteAllCookies();
@@ -86,7 +96,9 @@ public class JustDialHomePageTest  {
 		search.setTopRated();
 		search.getServiceDetails();
 		Thread.sleep(2000);
+		ReportsClass.test.log(Status.INFO, "Printing the Services Names and Phone Numbers");
 		listingPage= search.printDetails();
+		System.out.println("Test 1 Passed");
 	}
 	
 	public void test2(String mobileNum){
@@ -94,8 +106,11 @@ public class JustDialHomePageTest  {
     		if(driver!=null) driver.manage().deleteAllCookies();
             listingPage.fillFormWithInvalidPhone(mobileNum);
             String error = listingPage.getErrorMessage();
+            ReportsClass.test.log(Status.INFO, "Logging Error Info");
             System.out.println("Captured Error Message: " + error);
             homePage=listingPage.captureErrorScreenshot(mobileNum,++count);
+            ReportsClass.test.log(Status.INFO, "ScreenShot captured for second test");
+            System.out.println("Test 2 Passed");
     	} catch (Exception e) {
             System.out.println("Error capturing screenshot: " + e.getMessage());
             e.printStackTrace();
@@ -103,11 +118,14 @@ public class JustDialHomePageTest  {
 	}
 	    public void testGymSearchAndScroll() throws InterruptedException, IOException {
 	    	if(driver!=null) driver.manage().deleteAllCookies();
+	    	ReportsClass.test.log(Status.INFO, "Redirecting to Gyms Page");
 	        homePage.clickGymLink();
 	        homePage.selectLocation("gachibowli, Hyderabad");
 	        homePage.scrolling();
 //	        homePage.scrollAndExtractGymNames();
 	        homePage.gymNames();
+	        ReportsClass.test.log(Status.INFO, "Printing the Gyms Names and Storing it in Excel File");
+	        System.out.println("Test 3 Passed");
 	    }
 	
 
